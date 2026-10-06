@@ -3,72 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#08070c">
+  <meta name="theme-color" content="#f4eee4">
   <meta name="description" content="Halloween 2026 live photo wall">
   <title>Halloween 2026 — Photo Wall</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="fog fog-a" aria-hidden="true"></div>
-  <div class="fog fog-b" aria-hidden="true"></div>
+  <main class="page-shell">
+    <header class="hero">
+      <div class="brand">NARWHALL</div>
+      <p class="kicker">🎃 HALLOWEEN 🎃</p>
+      <h1>Halloween<br><em>2026</em></h1>
+      <p class="intro">Capture your moment and share the night with everyone.</p>
+    </header>
 
-  <header class="hero">
-    <div class="brand-lockup">
-      <img class="narwhall-logo" src="/narwhall-logo.svg" alt="Narwhall">
-      <span class="brand-tagline">YOUR NIGHT. YOUR MOMENT.</span>
-    </div>
-    <div class="hero-copy">
-      <p class="eyebrow">THE NIGHT IS ALIVE</p>
-      <h1>Halloween <span>2026</span></h1>
-      <p class="subtitle">Scan. Snap. Share the fright.</p>
-    </div>
-    <button class="ghost-button" id="uploadTop" type="button">＋ Add your photo</button>
-  </header>
+    <section class="capture-card" aria-labelledby="captureTitle">
+      <p class="tiny-label">📸 YOUR TURN</p>
+      <h2 id="captureTitle">Got a spooky photo?</h2>
+      <p>Choose your favourite Halloween shot and we'll add it to the wall.</p>
+      <button class="primary-button" id="uploadMain" type="button">Add your photo</button>
+      <p class="no-fuss">No account · No name · Just the photo</p>
+    </section>
 
-  <main>
-    <section class="invite" aria-labelledby="inviteTitle">
-      <div class="invite-copy">
-        <p class="eyebrow">JOIN THE WALL</p>
-        <h2 id="inviteTitle">Got a photo?</h2>
-        <p>Scan the QR code, choose your favourite Halloween shot, and it will appear here for everyone to see.</p>
-        <button class="primary-button" id="uploadMain" type="button">Add your photo</button>
-      </div>
+    <section class="qr-section" aria-labelledby="qrTitle">
+      <p class="tiny-label">ON YOUR PHONE</p>
+      <h2 id="qrTitle">Scan to upload</h2>
       <div class="qr-wrap">
         <div id="qrcode" aria-label="QR code to upload a photo"></div>
-        <span>SCAN TO UPLOAD</span>
       </div>
+      <p class="qr-caption">Point your camera here 👻</p>
     </section>
 
     <section class="wall-section" aria-labelledby="wallTitle">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">LIVE FEED</p>
-          <h2 id="wallTitle">The Wall <span id="photoCount"></span></h2>
+          <p class="tiny-label">THE LIVE WALL</p>
+          <h2 id="wallTitle">That's a lovely photo <span id="photoCount"></span> 🖤</h2>
         </div>
-        <span class="live-pill"><i></i> LIVE</span>
       </div>
       <div id="status" class="status" role="status" aria-live="polite">Loading the wall…</div>
       <div id="wall" class="wall" aria-live="polite"></div>
     </section>
-  </main>
 
-  <footer class="site-footer">
-    <img src="/narwhall-logo.svg" alt="Narwhall">
-    <span>Powered by Narwhall · Capture the night</span>
-  </footer>
+    <footer class="footer">
+      <div class="brand">NARWHALL</div>
+      <span>Capture your moment · Share the night</span>
+    </footer>
+  </main>
 
   <div class="modal" id="uploadModal" hidden>
     <div class="modal-backdrop" data-close></div>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
       <button class="close-button" id="closeUpload" type="button" aria-label="Close">×</button>
-      <p class="eyebrow">ADD TO THE WALL</p>
+      <p class="tiny-label">🎃 ADD TO THE WALL</p>
       <h2 id="uploadTitle">Your Halloween moment</h2>
       <p class="modal-intro">Choose one photo. No account, no name, no fuss.</p>
 
       <form id="uploadForm">
         <label class="dropzone" id="dropzone">
           <input id="photoInput" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required>
-          <span class="upload-icon">↑</span>
+          <span class="upload-icon">📷</span>
           <strong>Choose a photo</strong>
           <span>Camera or gallery · up to 15 MB</span>
         </label>
@@ -80,7 +74,7 @@
         <div id="uploadError" class="form-message error" role="alert" hidden></div>
         <div id="uploadSuccess" class="form-message success" role="status" hidden></div>
         <div class="progress" id="progressWrap" hidden><span id="progressBar"></span></div>
-        <button class="primary-button full" id="submitUpload" type="submit">Upload photo</button>
+        <button class="primary-button full" id="submitUpload" type="submit">Post to the wall</button>
       </form>
     </section>
   </div>
