@@ -1,0 +1,17 @@
+name = "halloween-wall"
+main = "index.js"
+compatibility_date = "2026-10-01"
+
+# Replace the placeholder D1 database_id after creating the database.
+[[d1_databases]]
+binding = "DB"
+database_name = "halloween-wall"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "halloween-wall-photos"
+
+[assets]
+directory = "../web"
+binding = "ASSETS"
