@@ -11,31 +11,32 @@
 <body>
   <main class="page-shell">
     <header class="hero">
-      <div class="brand-lockup">
-        <div class="brand">NARWHALL</div>
-        <span class="brand-rule"></span>
-        <span class="brand-tagline">Be part of our wall.</span>
-      </div>
+      <div class="brand">NARWHALL</div>
       <p class="kicker">🎃 HALLOWEEN 2026 🎃</p>
-      <h1>Share the<br><em>night.</em></h1>
-      <p class="intro">Take a photo, post it to the wall, and be part of the Halloween story.</p>
+      <p class="tagline">Be part of our wall.</p>
+      <h1>Capture<br><em>the night.</em></h1>
     </header>
 
-    <section class="capture-card" aria-labelledby="captureTitle">
-      <div class="capture-copy">
-        <p class="tiny-label">📸 YOUR MOMENT</p>
-        <h2 id="captureTitle">Be part of the wall.</h2>
-        <p>Got a spooky one? A great one? A slightly questionable one? Add your favourite Halloween photo and see it join the live wall.</p>
-        <button class="primary-button" id="uploadMain" type="button">Add your photo</button>
+    <section class="polaroid-intro" aria-labelledby="captureTitle">
+      <div class="polaroid-photo">
+        <div class="polaroid-placeholder" aria-hidden="true">
+          <span>📸</span>
+          <small>YOUR MOMENT</small>
+        </div>
+        <div class="polaroid-caption">be part of our wall ✦</div>
+      </div>
+      <div class="polaroid-copy">
+        <p class="tiny-label">📸 YOUR TURN</p>
+        <h2 id="captureTitle">That's a lovely photo.</h2>
+        <p>Take your Halloween photo and add it to the live wall for everyone to see.</p>
+        <button class="primary-button" id="uploadMain" type="button">Post to Wall</button>
         <p class="no-fuss">No account · No name · Just the photo</p>
       </div>
-      <div class="capture-mark" aria-hidden="true">✦</div>
     </section>
 
     <section class="qr-section" aria-labelledby="qrTitle">
       <p class="tiny-label">ON YOUR PHONE</p>
-      <h2 id="qrTitle">Scan &amp; share</h2>
-      <p class="section-intro">Point your camera here to add your photo in seconds.</p>
+      <h2 id="qrTitle">Capture your moment's</h2>
       <div class="qr-wrap">
         <div id="qrcode" aria-label="QR code to upload a photo"></div>
       </div>
@@ -44,8 +45,8 @@
 
     <section class="wall-section" aria-labelledby="wallTitle">
       <div class="section-heading">
-        <p class="tiny-label">THE LIVE WALL</p>
-        <h2 id="wallTitle">Look what you've made.</h2>
+        <p class="tiny-label">NARWHALL HALLOWEEN</p>
+        <h2 id="wallTitle">The live wall.</h2>
         <p>Every photo becomes part of the night.</p>
       </div>
       <div id="status" class="status" role="status" aria-live="polite">Loading the wall…</div>
@@ -53,11 +54,8 @@
     </section>
 
     <footer class="footer">
-      <div class="footer-brand">
-        <div class="brand">NARWHALL</div>
-        <span>Be part of our wall.</span>
-      </div>
-      <span>Halloween 2026 · Capture your moment · Share the night</span>
+      <div class="brand">NARWHALL</div>
+      <span>Be part of our wall. · Halloween 2026</span>
     </footer>
   </main>
 
@@ -68,7 +66,6 @@
       <p class="tiny-label">🎃 BE PART OF THE WALL</p>
       <h2 id="uploadTitle">Your Halloween moment</h2>
       <p class="modal-intro">Choose one photo. No account, no name, no fuss.</p>
-
       <form id="uploadForm">
         <label class="dropzone" id="dropzone">
           <input id="photoInput" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required>
