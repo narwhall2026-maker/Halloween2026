@@ -13,13 +13,11 @@ const modal = document.querySelector("#uploadModal");
 const form = document.querySelector("#uploadForm");
 const input = document.querySelector("#photoInput");
 const captionInput = document.querySelector("#caption");
-const photoPolaroid = document.querySelector("#photoPolaroid");
-const takePhotoButton = document.querySelector("#takePhotoButton");
+const cameraPrompt = document.querySelector("#cameraPrompt");
+const photoReview = document.querySelector("#photoReview");
+const openCamera = document.querySelector("#openCamera");
 const retakePhoto = document.querySelector("#retakePhoto");
-const preview = document.querySelector("#preview");
 const previewImage = document.querySelector("#previewImage");
-const fileName = document.querySelector("#fileName");
-const fileSize = document.querySelector("#fileSize");
 const uploadError = document.querySelector("#uploadError");
 const uploadSuccess = document.querySelector("#uploadSuccess");
 const submitUpload = document.querySelector("#submitUpload");
@@ -33,16 +31,18 @@ const apiHeaders = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY
 let knownIds = new Set();
 let firstLoad = true;
 
-function openModal() {
+function showModal() {
   modal.hidden = false;
   document.body.style.overflow = "hidden";
 }
-function closeModal() {
-  if (!modal.hidden) {
-    modal.hidden = true;
-    document.body.style.overflow = "";
-    resetPhotoChoice();
-  }
+function hideModal() {
+  modal.hidden = true;
+  document.body.style.overflow = "";
+  resetReview();
+}
+function startCamera() {
+  input.value = "";
+  input.click();
 }
 function openLightbox(url) {
   lightboxImage.src = url;
@@ -53,10 +53,6 @@ function closeLightbox() {
   lightbox.hidden = true;
   lightboxImage.removeAttribute("src");
   document.body.style.overflow = "";
-}
-function formatBytes(bytes) {
-  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 function showMessage(element, message) {
   element.textContent = message;
@@ -116,38 +112,35 @@ function validateFile(file) {
   return null;
 }
 function validateCaption() {
-  const value = captionInput.value.trim();
-  if ([...value].length > MAX_CAPTION) return "Your caption can be 15 letters maximum.";
+  if ([...captionInput.value].length > MAX_CAPTION) return "Your caption can be 15 letters maximum.";
   return null;
 }
-function showPreview(file) {
-  fileName.textContent = file.name;
-  fileSize.textContent = formatBytes(file.size);
-  preview.hidden = false;
-  photoPolaroid.hidden = false;
-  takePhotoButton.hidden = true;
-  submitUpload.disabled = false;
-  if (file.type.startsWith("image/") && !["image/heic", "image/heif"].includes(file.type.toLowerCase())) {
+function showReview(file) {
+  clearMessages();
+  const type = file.type.toLowerCase();
+  if (type === "image/heic" || type === "image/heif") {
+    previewImage.removeAttribute("src");
+    previewImage.alt = "Photo taken — ready to pin";
+  } else {
     const url = URL.createObjectURL(file);
     previewImage.onload = () => URL.revokeObjectURL(url);
     previewImage.src = url;
-    previewImage.hidden = false;
-  } else {
-    previewImage.hidden = true;
   }
+  cameraPrompt.hidden = true;
+  photoReview.hidden = false;
+  showModal();
+  setTimeout(() => captionInput.focus(), 120);
 }
-function resetPhotoChoice() {
+function resetReview() {
   form.reset();
-  photoPolaroid.hidden = true;
-  takePhotoButton.hidden = false;
-  preview.hidden = true;
+  cameraPrompt.hidden = true;
+  photoReview.hidden = true;
   previewImage.removeAttribute("src");
-  previewImage.hidden = false;
-  submitUpload.disabled = false;
-  submitUpload.textContent = "Post";
+  clearMessages();
   progressWrap.hidden = true;
   progressBar.style.width = "0";
-  clearMessages();
+  submitUpload.disabled = false;
+  submitUpload.textContent = "Pin";
 }
 function extensionFor(mime) {
   return { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" }[mime] || "bin";
@@ -177,21 +170,14 @@ input.addEventListener("change", () => {
     input.value = "";
     return;
   }
-  showPreview(file);
+  showReview(file);
 });
 captionInput.addEventListener("input", () => {
   const chars = [...captionInput.value];
   if (chars.length > MAX_CAPTION) captionInput.value = chars.slice(0, MAX_CAPTION).join("");
 });
-retakePhoto.addEventListener("click", () => {
-  input.value = "";
-  clearMessages();
-  photoPolaroid.hidden = true;
-  takePhotoButton.hidden = false;
-  preview.hidden = true;
-  previewImage.removeAttribute("src");
-  setTimeout(() => input.click(), 0);
-});
+retakePhoto.addEventListener("click", startCamera);
+openCamera?.addEventListener("click", startCamera);
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   clearMessages();
@@ -201,32 +187,28 @@ form.addEventListener("submit", async (event) => {
   if (fileError) return showMessage(uploadError, fileError);
   const captionError = validateCaption();
   if (captionError) return showMessage(uploadError, captionError);
-  const caption = captionInput.value.trim();
   submitUpload.disabled = true;
   progressWrap.hidden = false;
   progressBar.style.width = "25%";
-  submitUpload.textContent = "Posting…";
+  submitUpload.textContent = "Pinning…";
   try {
-    await uploadPhoto(file, caption);
+    await uploadPhoto(file, captionInput.value.trim());
     progressBar.style.width = "100%";
-    showMessage(uploadSuccess, "Posted! Your Polaroid is on the wall.");
+    showMessage(uploadSuccess, "Pinned! Your Polaroid is on the wall.");
     await loadPhotos();
-    submitUpload.textContent = "Posted ✓";
-    setTimeout(closeModal, 1300);
+    submitUpload.textContent = "Pinned ✓";
+    setTimeout(hideModal, 1100);
   } catch (err) {
     showMessage(uploadError, err.message || "Upload failed. Please try again.");
     submitUpload.disabled = false;
-    submitUpload.textContent = "Post";
+    submitUpload.textContent = "Pin";
   }
 });
-for (const button of [document.querySelector("#uploadTop"), document.querySelector("#uploadMain")]) {
-  if (button) button.addEventListener("click", openModal);
-}
-document.querySelector("#closeUpload").addEventListener("click", closeModal);
-modal.addEventListener("click", (event) => { if (event.target.hasAttribute("data-close")) closeModal(); });
+document.querySelector("#uploadMain").addEventListener("click", startCamera);
+document.querySelector("#closeUpload").addEventListener("click", hideModal);
 document.querySelector("#closeLightbox").addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => { if (event.target === lightbox) closeLightbox(); });
-document.addEventListener("keydown", (event) => { if (event.key === "Escape") { closeModal(); closeLightbox(); } });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") { hideModal(); closeLightbox(); } });
 loadPhotos();
 setInterval(loadPhotos, 4000);
-if (new URLSearchParams(location.search).get("upload") === "1") openModal();
+if (new URLSearchParams(location.search).get("upload") === "1") startCamera();
