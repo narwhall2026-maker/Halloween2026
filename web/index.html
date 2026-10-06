@@ -3,53 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#120b09">
+  <meta name="theme-color" content="#090605">
   <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
-  <title>Halloween 2026 — Narwhall Photo Wall</title>
+  <title>NARWHALL — Halloween 2026</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <div class="scene scene-left" aria-hidden="true"></div>
+  <div class="scene scene-right" aria-hidden="true"></div>
   <main class="page-shell">
     <header class="hero">
-      <div class="brand-mark" aria-label="Narwhall">NARWHALL</div>
+      <div class="moon" aria-hidden="true">🌕</div>
+      <div class="brand-lockup">
+        <div class="brand-mark">NARWHALL</div>
+      </div>
       <p class="kicker"><span>🎃</span> HALLOWEEN 2026 <span>🎃</span></p>
       <p class="tagline">Be part of our wall.</p>
-      <p class="hero-note">Capture the night. Share the fun.</p>
     </header>
 
-    <section class="polaroid-intro" aria-labelledby="captureTitle">
-      <div class="polaroid-photo">
-        <div class="polaroid-photo-inner">
-          <div class="polaroid-placeholder" aria-hidden="true">
-            <span>📸</span>
-            <small>YOUR HALLOWEEN MOMENT</small>
-          </div>
-        </div>
-        <div class="polaroid-caption">be part of our wall ✦</div>
+    <section class="join-section" aria-labelledby="joinTitle">
+      <div class="qr-polaroid">
+        <div class="tape"></div>
+        <div class="qr-frame"><div id="qrcode" aria-label="QR code to upload a photo"></div></div>
+        <div class="polaroid-caption">Scan &amp; Pin <span>♡</span></div>
       </div>
-      <div class="polaroid-copy">
+      <div class="join-copy">
         <p class="tiny-label">📸 YOUR TURN</p>
-        <h2 id="captureTitle">That's a lovely photo.</h2>
+        <h1 id="joinTitle">That’s a lovely photo.</h1>
         <p>Take your Halloween photo and add it to the live wall for everyone to see.</p>
         <button class="primary-button" id="uploadMain" type="button">Post to Wall</button>
-        <p class="no-fuss">No account · No name · Just the photo</p>
+        <p class="no-fuss">No account · No name · Just the photo.</p>
       </div>
+      <div class="scan-note" aria-hidden="true"><span>↘</span> Scan the QR code<br>to join the fun!</div>
     </section>
 
-    <section class="qr-section" aria-labelledby="qrTitle">
-      <p class="tiny-label">ON YOUR PHONE</p>
-      <h2 id="qrTitle">Scan &amp; join the wall.</h2>
-      <div class="qr-wrap">
-        <div id="qrcode" aria-label="QR code to upload a photo"></div>
-      </div>
-      <p class="qr-caption">Point your camera here 👻</p>
-    </section>
+    <div class="divider"><span>✦</span></div>
 
     <section class="wall-section" aria-labelledby="wallTitle">
       <div class="section-heading">
-        <p class="tiny-label">NARWHALL HALLOWEEN</p>
-        <h2 id="wallTitle">The live wall.</h2>
-        <p>Every photo becomes part of the night.</p>
+        <p class="tiny-label">LIVE WALL</p>
+        <h2 id="wallTitle">Your photos. Live.</h2>
+        <p class="wall-subtitle">SNAP <span>•</span> PIN <span>•</span> SEE IT HERE</p>
       </div>
       <div id="status" class="status" role="status" aria-live="polite">Loading the wall…</div>
       <div id="wall" class="wall" aria-live="polite"></div>
