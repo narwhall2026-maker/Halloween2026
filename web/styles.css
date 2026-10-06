@@ -31,7 +31,11 @@ button { cursor: pointer; }
 .fog-b { right: -20vw; top: 25vh; background: var(--accent); }
 
 .hero, main { width: min(1400px, calc(100% - 40px)); margin-inline: auto; }
-.hero { padding: 58px 0 35px; display: flex; align-items: end; justify-content: space-between; gap: 30px; }
+.hero { padding: 38px 0 35px; display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 30px; }
+.brand-lockup { display: grid; gap: 8px; align-self: start; }
+.narwhall-logo { display: block; width: min(250px, 32vw); height: auto; }
+.brand-tagline { margin-left: 4px; color: var(--accent); font-size: .62rem; font-weight: 900; letter-spacing: .2em; }
+.hero-copy { min-width: 0; }
 .eyebrow { margin: 0 0 8px; font-size: .72rem; font-weight: 800; letter-spacing: .2em; color: #d7cedf; }
 h1, h2 { margin: 0; line-height: .95; letter-spacing: -.045em; }
 h1 { font-size: clamp(3.3rem, 9vw, 7.5rem); }
@@ -60,10 +64,13 @@ h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
 .live-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: #d9d2df; font-size: .7rem; font-weight: 900; letter-spacing: .12em; }
 .live-pill i { width: 7px; height: 7px; border-radius: 50%; background: #65e37d; box-shadow: 0 0 12px #65e37d; }
 .status { min-height: 24px; margin-bottom: 15px; color: var(--muted); font-size: .9rem; }
-.wall { columns: 4 230px; column-gap: 14px; padding-bottom: 70px; }
+.wall { columns: 4 230px; column-gap: 14px; padding-bottom: 30px; }
 .card { break-inside: avoid; margin: 0 0 14px; position: relative; overflow: hidden; border-radius: 18px; background: #15121c; border: 1px solid var(--line); box-shadow: 0 14px 35px rgba(0,0,0,.25); cursor: zoom-in; }
 .card img { display: block; width: 100%; height: auto; min-height: 150px; object-fit: cover; transition: transform .35s; }
 .card:hover img { transform: scale(1.035); }
+
+.site-footer { width: min(1400px, calc(100% - 40px)); margin: 10px auto 35px; padding: 24px 0 10px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: .78rem; }
+.site-footer img { width: 150px; height: auto; }
 
 .modal[hidden], .lightbox[hidden] { display: none; }
 .modal { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 18px; }
@@ -91,14 +98,25 @@ h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
 .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 12px; box-shadow: var(--shadow); }
 .lightbox button { position: fixed; top: 15px; right: 20px; border: 0; background: transparent; color: #fff; font-size: 3rem; }
 
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr auto; align-items: center; }
+  .brand-lockup { grid-column: 1 / -1; }
+  .narwhall-logo { width: 220px; }
+  .hero-copy { grid-column: 1 / -1; }
+}
+
 @media (max-width: 760px) {
-  .hero { padding-top: 35px; display: block; }
+  .hero { padding-top: 28px; display: block; }
+  .brand-lockup { margin-bottom: 28px; }
+  .narwhall-logo { width: min(245px, 70vw); }
   .hero .ghost-button { margin-top: 24px; }
   .invite { grid-template-columns: 1fr; padding: 25px; }
   .qr-wrap { order: -1; }
   #qrcode img, #qrcode canvas { width: 145px !important; height: 145px !important; }
   .wall { columns: 2 150px; column-gap: 9px; }
   .card { margin-bottom: 9px; border-radius: 13px; }
+  .site-footer { display: grid; justify-items: start; }
+  .site-footer img { width: 135px; }
   .modal-card { padding: 26px 20px; }
 }
 
