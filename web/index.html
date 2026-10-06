@@ -3,38 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090605">
+  <meta name="theme-color" content="#080504">
   <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
   <title>NARWHALL — Halloween 2026</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="scene scene-left" aria-hidden="true"></div>
-  <div class="scene scene-right" aria-hidden="true"></div>
+  <div class="haunted-scene" aria-hidden="true"><span class="moon"></span><span class="castle">♜</span><span class="bat bat-one">🦇</span><span class="bat bat-two">🦇</span></div>
   <main class="page-shell">
     <header class="hero">
-      <div class="moon" aria-hidden="true">🌕</div>
-      <div class="brand-lockup">
-        <div class="brand-mark">NARWHALL</div>
-      </div>
+      <img class="narwhall-logo" src="/narwhall-logo.svg" alt="NARWHALL">
       <p class="kicker"><span>🎃</span> HALLOWEEN 2026 <span>🎃</span></p>
       <p class="tagline">Be part of our wall.</p>
+      <div class="orange-swoosh" aria-hidden="true"></div>
     </header>
 
     <section class="join-section" aria-labelledby="joinTitle">
       <div class="qr-polaroid">
         <div class="tape"></div>
-        <div class="qr-frame"><div id="qrcode" aria-label="QR code to upload a photo"></div></div>
+        <div class="qr-frame"><div id="qrcode" aria-label="QR code to open the camera"></div></div>
         <div class="polaroid-caption">Scan &amp; Pin <span>♡</span></div>
       </div>
       <div class="join-copy">
-        <p class="tiny-label">📸 YOUR TURN</p>
-        <h1 id="joinTitle">That’s a lovely photo.</h1>
-        <p>Take your Halloween photo and add it to the live wall for everyone to see.</p>
-        <button class="primary-button" id="uploadMain" type="button">Post to Wall</button>
-        <p class="no-fuss">No account · No name · Just the photo.</p>
+        <p class="tiny-label">📷 YOUR TURN</p>
+        <h1 id="joinTitle">That’s a lovely<br>photo.</h1>
+        <p>Use your camera to take a photo and add it to the live wall for everyone to see.</p>
+        <button class="primary-button" id="uploadMain" type="button">📷 &nbsp;Open Camera</button>
+        <p class="no-fuss">No gallery · No account · Max 15 letters</p>
       </div>
-      <div class="scan-note" aria-hidden="true"><span>↘</span> Scan the QR code<br>to join the fun!</div>
     </section>
 
     <div class="divider"><span>✦</span></div>
@@ -49,44 +45,37 @@
       <div id="wall" class="wall" aria-live="polite"></div>
     </section>
 
-    <footer class="footer">
-      <div class="brand-mark">NARWHALL</div>
-      <span>Be part of our wall. · Halloween 2026</span>
-    </footer>
+    <footer class="footer"><img src="/narwhall-logo.svg" alt="Narwhall"><span>Be part of our wall. · Halloween 2026</span></footer>
   </main>
 
   <div class="modal" id="uploadModal" hidden>
     <div class="modal-backdrop" data-close></div>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
       <button class="close-button" id="closeUpload" type="button" aria-label="Close">×</button>
-      <p class="tiny-label">🎃 BE PART OF THE WALL</p>
-      <h2 id="uploadTitle">Your Halloween moment</h2>
-      <p class="modal-intro">Choose one photo. No account, no name, no fuss.</p>
+      <p class="tiny-label">📷 YOUR HALLOWEEN MOMENT</p>
+      <h2 id="uploadTitle">Take your photo.</h2>
+      <p class="modal-intro">Camera only · one photo · up to 15 MB.</p>
       <form id="uploadForm">
         <label class="dropzone" id="dropzone">
-          <input id="photoInput" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required>
+          <input id="photoInput" name="photo" type="file" accept="image/*" capture="environment" required>
           <span class="upload-icon">📷</span>
-          <strong>Choose a photo</strong>
-          <span>Camera or gallery · up to 15 MB</span>
+          <strong>Open Camera</strong>
+          <span>Take a fresh Halloween photo</span>
         </label>
+        <label class="caption-label" for="caption">Add a caption <span>15 letters max</span></label>
+        <input id="caption" name="caption" class="caption-input" type="text" maxlength="15" autocomplete="off" placeholder="e.g. BOO 👻">
+        <div class="caption-hint">Keep it short — maximum 15 letters.</div>
         <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div id="preview" class="preview" hidden>
-          <img id="previewImage" alt="Selected photo preview">
-          <div><strong id="fileName"></strong><span id="fileSize"></span></div>
-        </div>
+        <div id="preview" class="preview" hidden><img id="previewImage" alt="Selected photo preview"><div><strong id="fileName"></strong><span id="fileSize"></span></div></div>
         <div id="uploadError" class="form-message error" role="alert" hidden></div>
         <div id="uploadSuccess" class="form-message success" role="status" hidden></div>
         <div class="progress" id="progressWrap" hidden><span id="progressBar"></span></div>
-        <button class="primary-button full" id="submitUpload" type="submit">Post to the wall</button>
+        <button class="primary-button full" id="submitUpload" type="submit">Pin to the wall</button>
       </form>
     </section>
   </div>
 
-  <div class="lightbox" id="lightbox" hidden>
-    <button id="closeLightbox" type="button" aria-label="Close photo">×</button>
-    <img id="lightboxImage" alt="Enlarged wall photo">
-  </div>
-
+  <div class="lightbox" id="lightbox" hidden><button id="closeLightbox" type="button" aria-label="Close photo">×</button><img id="lightboxImage" alt="Enlarged wall photo"></div>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script src="/app.js"></script>
 </body>
