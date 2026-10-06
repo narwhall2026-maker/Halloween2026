@@ -23,12 +23,9 @@ const progressWrap = document.querySelector("#progressWrap");
 const progressBar = document.querySelector("#progressBar");
 const lightbox = document.querySelector("#lightbox");
 const lightboxImage = document.querySelector("#lightboxImage");
+const honeypot = form.querySelector("input[name=website]");
 
-const apiHeaders = {
-  apikey: SUPABASE_KEY,
-  Authorization: `Bearer ${SUPABASE_KEY}`,
-};
-
+const apiHeaders = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` };
 let knownIds = new Set();
 let firstLoad = true;
 
@@ -93,10 +90,7 @@ function renderPhotos(photos) {
 }
 async function loadPhotos() {
   try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/${TABLE}?select=public_id,storage_path,created_at&approved=eq.true&order=created_at.desc&limit=300`,
-      { headers: apiHeaders, cache: "no-store" }
-    );
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=public_id,storage_path,created_at&approved=eq.true&order=created_at.desc&limit=300`, { headers: apiHeaders, cache: "no-store" });
     if (!response.ok) throw new Error("Wall unavailable");
     const photos = await response.json();
     renderPhotos(Array.isArray(photos) ? photos : []);
@@ -146,16 +140,13 @@ async function uploadPhoto(file) {
     body: JSON.stringify({ public_id: publicId, storage_path: path, bytes: file.size, mime_type: file.type.toLowerCase(), approved: true }),
   });
   if (!insertResponse.ok) {
-    await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`, { method: "DELETE", headers: apiHeaders }).catch(() => {});
     const details = await insertResponse.text();
     throw new Error(details || "The photo could not be added to the wall.");
   }
 }
 function setupQr() {
   const target = `${location.origin}/?upload=1`;
-  if (window.QRCode) {
-    new QRCode(document.querySelector("#qrcode"), { text: target, width: 170, height: 170, correctLevel: QRCode.CorrectLevel.M });
-  }
+  if (window.QRCode) new QRCode(document.querySelector("#qrcode"), { text: target, width: 170, height: 170, correctLevel: QRCode.CorrectLevel.M });
 }
 input.addEventListener("change", () => {
   clearMessages();
@@ -172,6 +163,7 @@ input.addEventListener("change", () => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   clearMessages();
+  if (honeypot.value) return;
   const file = input.files?.[0];
   const error = validateFile(file);
   if (error) return showMessage(uploadError, error);
@@ -199,9 +191,7 @@ document.querySelector("#closeUpload").addEventListener("click", closeModal);
 modal.addEventListener("click", (event) => { if (event.target.hasAttribute("data-close")) closeModal(); });
 document.querySelector("#closeLightbox").addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => { if (event.target === lightbox) closeLightbox(); });
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") { closeModal(); closeLightbox(); }
-});
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") { closeModal(); closeLightbox(); } });
 setupQr();
 loadPhotos();
 setInterval(loadPhotos, 4000);
