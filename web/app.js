@@ -1,4 +1,5 @@
 const MAX_BYTES = 15 * 1024 * 1024;
+const MAX_CAPTION = 15;
 const ACCEPTED = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 
 const SUPABASE_URL = "https://vjugsidfdovuwtxgcvrz.supabase.co";
@@ -8,10 +9,10 @@ const TABLE = "wall_photos";
 
 const wall = document.querySelector("#wall");
 const status = document.querySelector("#status");
-const photoCount = document.querySelector("#photoCount");
 const modal = document.querySelector("#uploadModal");
 const form = document.querySelector("#uploadForm");
 const input = document.querySelector("#photoInput");
+const captionInput = document.querySelector("#caption");
 const preview = document.querySelector("#preview");
 const previewImage = document.querySelector("#previewImage");
 const fileName = document.querySelector("#fileName");
@@ -79,18 +80,23 @@ function renderPhotos(photos) {
     img.loading = "lazy";
     img.decoding = "async";
     img.src = publicPhotoUrl(photo.storage_path);
-    img.alt = "Halloween event photo";
+    img.alt = photo.caption ? `Halloween photo: ${photo.caption}` : "Halloween event photo";
     card.appendChild(img);
+    if (photo.caption) {
+      const caption = document.createElement("span");
+      caption.className = "card-caption";
+      caption.textContent = photo.caption;
+      card.appendChild(caption);
+    }
     fragment.appendChild(card);
   }
   wall.replaceChildren(fragment);
   knownIds = incoming;
-  if (photoCount) photoCount.textContent = photos.length ? `· ${photos.length}` : "";
   firstLoad = false;
 }
 async function loadPhotos() {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=public_id,storage_path,created_at&approved=eq.true&order=created_at.desc&limit=300`, { headers: apiHeaders, cache: "no-store" });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=public_id,storage_path,created_at,caption&approved=eq.true&order=created_at.desc&limit=300`, { headers: apiHeaders, cache: "no-store" });
     if (!response.ok) throw new Error("Wall unavailable");
     const photos = await response.json();
     renderPhotos(Array.isArray(photos) ? photos : []);
@@ -100,10 +106,15 @@ async function loadPhotos() {
   }
 }
 function validateFile(file) {
-  if (!file) return "Please choose a photo.";
-  if (file.size <= 0) return "That file is empty. Please choose another photo.";
-  if (file.size > MAX_BYTES) return "That photo is over 15 MB. Please choose a smaller one.";
-  if (!ACCEPTED.has(file.type.toLowerCase())) return "Please choose a JPG, PNG, WebP, HEIC or HEIF image.";
+  if (!file) return "Please take a photo.";
+  if (file.size <= 0) return "That photo is empty. Please try again.";
+  if (file.size > MAX_BYTES) return "That photo is over 15 MB. Please take a smaller one.";
+  if (!ACCEPTED.has(file.type.toLowerCase())) return "Please take a JPG, PNG, WebP, HEIC or HEIF photo.";
+  return null;
+}
+function validateCaption() {
+  const value = captionInput.value.trim();
+  if ([...value].length > MAX_CAPTION) return "Your caption can be 15 letters maximum.";
   return null;
 }
 function showPreview(file) {
@@ -122,7 +133,7 @@ function showPreview(file) {
 function extensionFor(mime) {
   return { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" }[mime] || "bin";
 }
-async function uploadPhoto(file) {
+async function uploadPhoto(file, caption) {
   const publicId = crypto.randomUUID();
   const path = `${publicId}.${extensionFor(file.type.toLowerCase())}`;
   const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`, {
@@ -130,19 +141,13 @@ async function uploadPhoto(file) {
     headers: { ...apiHeaders, "content-type": file.type, "cache-control": "31536000", "x-upsert": "false" },
     body: file,
   });
-  if (!uploadResponse.ok) {
-    const details = await uploadResponse.text();
-    throw new Error(details || "Photo upload failed.");
-  }
+  if (!uploadResponse.ok) throw new Error((await uploadResponse.text()) || "Photo upload failed.");
   const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
     method: "POST",
     headers: { ...apiHeaders, "content-type": "application/json", Prefer: "return=minimal" },
-    body: JSON.stringify({ public_id: publicId, storage_path: path, bytes: file.size, mime_type: file.type.toLowerCase(), approved: true }),
+    body: JSON.stringify({ public_id: publicId, storage_path: path, bytes: file.size, mime_type: file.type.toLowerCase(), caption, approved: true }),
   });
-  if (!insertResponse.ok) {
-    const details = await insertResponse.text();
-    throw new Error(details || "The photo could not be added to the wall.");
-  }
+  if (!insertResponse.ok) throw new Error((await insertResponse.text()) || "The photo could not be added to the wall.");
 }
 function setupQr() {
   const target = `${location.origin}/?upload=1`;
@@ -152,7 +157,7 @@ function setupQr() {
     new QRCode(holder, { text: target, width: 245, height: 245, correctLevel: QRCode.CorrectLevel.M });
   } else {
     const img = document.createElement("img");
-    img.alt = "Scan to upload a Halloween photo";
+    img.alt = "Scan to open the camera";
     img.width = 245;
     img.height = 245;
     img.src = `https://api.qrserver.com/v1/create-qr-code/?size=245x245&data=${encodeURIComponent(target)}`;
@@ -171,30 +176,37 @@ input.addEventListener("change", () => {
   }
   showPreview(file);
 });
+captionInput.addEventListener("input", () => {
+  const chars = [...captionInput.value];
+  if (chars.length > MAX_CAPTION) captionInput.value = chars.slice(0, MAX_CAPTION).join("");
+});
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   clearMessages();
   if (honeypot.value) return;
   const file = input.files?.[0];
-  const error = validateFile(file);
-  if (error) return showMessage(uploadError, error);
+  const fileError = validateFile(file);
+  if (fileError) return showMessage(uploadError, fileError);
+  const captionError = validateCaption();
+  if (captionError) return showMessage(uploadError, captionError);
+  const caption = captionInput.value.trim();
   submitUpload.disabled = true;
   progressWrap.hidden = false;
   progressBar.style.width = "25%";
-  submitUpload.textContent = "Uploading…";
+  submitUpload.textContent = "Pinning…";
   try {
-    await uploadPhoto(file);
+    await uploadPhoto(file, caption);
     progressBar.style.width = "100%";
-    showMessage(uploadSuccess, "Photo added! It will appear on the wall in a moment.");
+    showMessage(uploadSuccess, "Pinned! Your photo is on the wall.");
     form.reset();
     preview.hidden = true;
-    submitUpload.textContent = "Uploaded ✓";
+    submitUpload.textContent = "Pinned ✓";
     await loadPhotos();
     setTimeout(closeModal, 1700);
   } catch (err) {
     showMessage(uploadError, err.message || "Upload failed. Please try again.");
     submitUpload.disabled = false;
-    submitUpload.textContent = "Upload photo";
+    submitUpload.textContent = "Pin to the wall";
   }
 });
 for (const button of [document.querySelector("#uploadTop"), document.querySelector("#uploadMain")]) {
