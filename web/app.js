@@ -13,6 +13,9 @@ const modal = document.querySelector("#uploadModal");
 const form = document.querySelector("#uploadForm");
 const input = document.querySelector("#photoInput");
 const captionInput = document.querySelector("#caption");
+const photoPolaroid = document.querySelector("#photoPolaroid");
+const takePhotoButton = document.querySelector("#takePhotoButton");
+const retakePhoto = document.querySelector("#retakePhoto");
 const preview = document.querySelector("#preview");
 const previewImage = document.querySelector("#previewImage");
 const fileName = document.querySelector("#fileName");
@@ -33,12 +36,12 @@ let firstLoad = true;
 function openModal() {
   modal.hidden = false;
   document.body.style.overflow = "hidden";
-  setTimeout(() => input.focus(), 0);
 }
 function closeModal() {
   if (!modal.hidden) {
     modal.hidden = true;
     document.body.style.overflow = "";
+    resetPhotoChoice();
   }
 }
 function openLightbox(url) {
@@ -121,6 +124,9 @@ function showPreview(file) {
   fileName.textContent = file.name;
   fileSize.textContent = formatBytes(file.size);
   preview.hidden = false;
+  photoPolaroid.hidden = false;
+  takePhotoButton.hidden = true;
+  submitUpload.disabled = false;
   if (file.type.startsWith("image/") && !["image/heic", "image/heif"].includes(file.type.toLowerCase())) {
     const url = URL.createObjectURL(file);
     previewImage.onload = () => URL.revokeObjectURL(url);
@@ -129,6 +135,19 @@ function showPreview(file) {
   } else {
     previewImage.hidden = true;
   }
+}
+function resetPhotoChoice() {
+  form.reset();
+  photoPolaroid.hidden = true;
+  takePhotoButton.hidden = false;
+  preview.hidden = true;
+  previewImage.removeAttribute("src");
+  previewImage.hidden = false;
+  submitUpload.disabled = false;
+  submitUpload.textContent = "Post";
+  progressWrap.hidden = true;
+  progressBar.style.width = "0";
+  clearMessages();
 }
 function extensionFor(mime) {
   return { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" }[mime] || "bin";
@@ -149,21 +168,6 @@ async function uploadPhoto(file, caption) {
   });
   if (!insertResponse.ok) throw new Error((await insertResponse.text()) || "The photo could not be added to the wall.");
 }
-function setupQr() {
-  const target = `${location.origin}/?upload=1`;
-  const holder = document.querySelector("#qrcode");
-  if (!holder) return;
-  if (window.QRCode) {
-    new QRCode(holder, { text: target, width: 245, height: 245, correctLevel: QRCode.CorrectLevel.M });
-  } else {
-    const img = document.createElement("img");
-    img.alt = "Scan to open the camera";
-    img.width = 245;
-    img.height = 245;
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=245x245&data=${encodeURIComponent(target)}`;
-    holder.appendChild(img);
-  }
-}
 input.addEventListener("change", () => {
   clearMessages();
   const file = input.files?.[0];
@@ -171,7 +175,6 @@ input.addEventListener("change", () => {
   if (error) {
     showMessage(uploadError, error);
     input.value = "";
-    preview.hidden = true;
     return;
   }
   showPreview(file);
@@ -179,6 +182,15 @@ input.addEventListener("change", () => {
 captionInput.addEventListener("input", () => {
   const chars = [...captionInput.value];
   if (chars.length > MAX_CAPTION) captionInput.value = chars.slice(0, MAX_CAPTION).join("");
+});
+retakePhoto.addEventListener("click", () => {
+  input.value = "";
+  clearMessages();
+  photoPolaroid.hidden = true;
+  takePhotoButton.hidden = false;
+  preview.hidden = true;
+  previewImage.removeAttribute("src");
+  setTimeout(() => input.click(), 0);
 });
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -193,20 +205,18 @@ form.addEventListener("submit", async (event) => {
   submitUpload.disabled = true;
   progressWrap.hidden = false;
   progressBar.style.width = "25%";
-  submitUpload.textContent = "Pinning…";
+  submitUpload.textContent = "Posting…";
   try {
     await uploadPhoto(file, caption);
     progressBar.style.width = "100%";
-    showMessage(uploadSuccess, "Pinned! Your photo is on the wall.");
-    form.reset();
-    preview.hidden = true;
-    submitUpload.textContent = "Pinned ✓";
+    showMessage(uploadSuccess, "Posted! Your Polaroid is on the wall.");
     await loadPhotos();
-    setTimeout(closeModal, 1700);
+    submitUpload.textContent = "Posted ✓";
+    setTimeout(closeModal, 1300);
   } catch (err) {
     showMessage(uploadError, err.message || "Upload failed. Please try again.");
     submitUpload.disabled = false;
-    submitUpload.textContent = "Pin to the wall";
+    submitUpload.textContent = "Post";
   }
 });
 for (const button of [document.querySelector("#uploadTop"), document.querySelector("#uploadMain")]) {
@@ -217,7 +227,6 @@ modal.addEventListener("click", (event) => { if (event.target.hasAttribute("data
 document.querySelector("#closeLightbox").addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => { if (event.target === lightbox) closeLightbox(); });
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") { closeModal(); closeLightbox(); } });
-setupQr();
 loadPhotos();
 setInterval(loadPhotos, 4000);
 if (new URLSearchParams(location.search).get("upload") === "1") openModal();
