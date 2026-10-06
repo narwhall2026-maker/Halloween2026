@@ -85,7 +85,7 @@ function renderPhotos(photos) {
   }
   wall.replaceChildren(fragment);
   knownIds = incoming;
-  photoCount.textContent = photos.length ? `· ${photos.length}` : "";
+  if (photoCount) photoCount.textContent = photos.length ? `· ${photos.length}` : "";
   firstLoad = false;
 }
 async function loadPhotos() {
@@ -146,7 +146,18 @@ async function uploadPhoto(file) {
 }
 function setupQr() {
   const target = `${location.origin}/?upload=1`;
-  if (window.QRCode) new QRCode(document.querySelector("#qrcode"), { text: target, width: 170, height: 170, correctLevel: QRCode.CorrectLevel.M });
+  const holder = document.querySelector("#qrcode");
+  if (!holder) return;
+  if (window.QRCode) {
+    new QRCode(holder, { text: target, width: 245, height: 245, correctLevel: QRCode.CorrectLevel.M });
+  } else {
+    const img = document.createElement("img");
+    img.alt = "Scan to upload a Halloween photo";
+    img.width = 245;
+    img.height = 245;
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=245x245&data=${encodeURIComponent(target)}`;
+    holder.appendChild(img);
+  }
 }
 input.addEventListener("change", () => {
   clearMessages();
@@ -186,7 +197,9 @@ form.addEventListener("submit", async (event) => {
     submitUpload.textContent = "Upload photo";
   }
 });
-for (const button of [document.querySelector("#uploadTop"), document.querySelector("#uploadMain")]) button.addEventListener("click", openModal);
+for (const button of [document.querySelector("#uploadTop"), document.querySelector("#uploadMain")]) {
+  if (button) button.addEventListener("click", openModal);
+}
 document.querySelector("#closeUpload").addEventListener("click", closeModal);
 modal.addEventListener("click", (event) => { if (event.target.hasAttribute("data-close")) closeModal(); });
 document.querySelector("#closeLightbox").addEventListener("click", closeLightbox);
