@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#17131a">
+  <meta name="theme-color" content="#120b09">
   <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
   <title>Halloween 2026 — Narwhall Photo Wall</title>
   <link rel="stylesheet" href="/styles.css">
@@ -11,17 +11,19 @@
 <body>
   <main class="page-shell">
     <header class="hero">
-      <div class="brand">NARWHALL</div>
-      <p class="kicker">🎃 HALLOWEEN 2026 🎃</p>
+      <div class="brand-mark" aria-label="Narwhall">NARWHALL</div>
+      <p class="kicker"><span>🎃</span> HALLOWEEN 2026 <span>🎃</span></p>
       <p class="tagline">Be part of our wall.</p>
-      <h1>Capture<br><em>the night.</em></h1>
+      <p class="hero-note">Capture the night. Share the fun.</p>
     </header>
 
     <section class="polaroid-intro" aria-labelledby="captureTitle">
       <div class="polaroid-photo">
-        <div class="polaroid-placeholder" aria-hidden="true">
-          <span>📸</span>
-          <small>YOUR MOMENT</small>
+        <div class="polaroid-photo-inner">
+          <div class="polaroid-placeholder" aria-hidden="true">
+            <span>📸</span>
+            <small>YOUR HALLOWEEN MOMENT</small>
+          </div>
         </div>
         <div class="polaroid-caption">be part of our wall ✦</div>
       </div>
@@ -36,11 +38,11 @@
 
     <section class="qr-section" aria-labelledby="qrTitle">
       <p class="tiny-label">ON YOUR PHONE</p>
-      <h2 id="qrTitle">Capture your moment's</h2>
+      <h2 id="qrTitle">Scan &amp; join the wall.</h2>
       <div class="qr-wrap">
         <div id="qrcode" aria-label="QR code to upload a photo"></div>
       </div>
-      <p class="qr-caption">Scan to upload 👻</p>
+      <p class="qr-caption">Point your camera here 👻</p>
     </section>
 
     <section class="wall-section" aria-labelledby="wallTitle">
@@ -54,7 +56,7 @@
     </section>
 
     <footer class="footer">
-      <div class="brand">NARWHALL</div>
+      <div class="brand-mark">NARWHALL</div>
       <span>Be part of our wall. · Halloween 2026</span>
     </footer>
   </main>
