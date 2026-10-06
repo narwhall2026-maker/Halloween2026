@@ -38,40 +38,36 @@
   </main>
 
   <div class="modal" id="uploadModal" hidden>
-    <div class="modal-backdrop" data-close></div>
-    <section class="modal-card camera-modal" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
+    <div class="modal-backdrop"></div>
+    <section class="modal-card photo-stage" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
       <button class="close-button" id="closeUpload" type="button" aria-label="Close">×</button>
-      <p class="tiny-label">📷 YOUR HALLOWEEN MOMENT</p>
-      <h2 id="uploadTitle">Take your photo.</h2>
-      <p class="modal-intro">Camera only · one photo · up to 15 MB.</p>
-
       <form id="uploadForm">
-        <label class="take-photo-button" id="takePhotoButton">
-          <input id="photoInput" name="photo" type="file" accept="image/*" capture="environment" required>
-          <span>📷 &nbsp;Take Photo</span>
-        </label>
+        <input id="photoInput" name="photo" type="file" accept="image/*" capture="environment" required>
 
-        <div id="photoPolaroid" class="photo-polaroid" hidden>
-          <div class="photo-polaroid-paper">
-            <div class="photo-polaroid-image"><img id="previewImage" alt="Your Halloween photo preview"></div>
-            <div class="photo-polaroid-caption">Be part of our wall. ✦</div>
-          </div>
-
-          <label class="caption-label" for="caption">Your caption <span>15 letters max</span></label>
-          <input id="caption" name="caption" class="caption-input" type="text" maxlength="15" autocomplete="off" placeholder="Write something…">
-          <div class="caption-hint">Maximum 15 letters.</div>
-
-          <div class="photo-actions">
-            <button class="secondary-button" id="retakePhoto" type="button">Retake</button>
-            <button class="primary-button" id="submitUpload" type="submit">Post</button>
-          </div>
+        <div id="cameraPrompt" class="camera-prompt">
+          <p class="tiny-label">📷 CAMERA</p>
+          <h2 id="uploadTitle">Take your photo.</h2>
+          <button class="primary-button take-photo-button" id="openCamera" type="button">Open Camera</button>
         </div>
 
+        <div id="photoReview" class="photo-review" hidden>
+          <div class="photo-polaroid-paper">
+            <div class="photo-polaroid-image"><img id="previewImage" alt="Your Halloween photo"></div>
+            <label class="photo-polaroid-caption" for="caption">
+              <span class="caption-placeholder">Write something…</span>
+              <input id="caption" name="caption" type="text" maxlength="15" autocomplete="off" placeholder="Write something…">
+            </label>
+          </div>
+
+          <div id="uploadError" class="form-message error" role="alert" hidden></div>
+          <div id="uploadSuccess" class="form-message success" role="status" hidden></div>
+          <div class="progress" id="progressWrap" hidden><span id="progressBar"></span></div>
+          <div class="photo-actions">
+            <button class="secondary-button" id="retakePhoto" type="button">Retake</button>
+            <button class="primary-button" id="submitUpload" type="submit">Pin</button>
+          </div>
+        </div>
         <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div id="preview" class="preview" hidden><strong id="fileName"></strong><span id="fileSize"></span></div>
-        <div id="uploadError" class="form-message error" role="alert" hidden></div>
-        <div id="uploadSuccess" class="form-message success" role="status" hidden></div>
-        <div class="progress" id="progressWrap" hidden><span id="progressBar"></span></div>
       </form>
     </section>
   </div>
