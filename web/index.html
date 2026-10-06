@@ -3,51 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f4eee4">
-  <meta name="description" content="Halloween 2026 live photo wall">
-  <title>Halloween 2026 — Photo Wall</title>
+  <meta name="theme-color" content="#17131a">
+  <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
+  <title>Halloween 2026 — Narwhall Photo Wall</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <main class="page-shell">
     <header class="hero">
-      <div class="brand">NARWHALL</div>
-      <p class="kicker">🎃 HALLOWEEN 🎃</p>
-      <h1>Halloween<br><em>2026</em></h1>
-      <p class="intro">Capture your moment and share the night with everyone.</p>
+      <div class="brand-lockup">
+        <div class="brand">NARWHALL</div>
+        <span class="brand-rule"></span>
+        <span class="brand-tagline">Be part of our wall.</span>
+      </div>
+      <p class="kicker">🎃 HALLOWEEN 2026 🎃</p>
+      <h1>Share the<br><em>night.</em></h1>
+      <p class="intro">Take a photo, post it to the wall, and be part of the Halloween story.</p>
     </header>
 
     <section class="capture-card" aria-labelledby="captureTitle">
-      <p class="tiny-label">📸 YOUR TURN</p>
-      <h2 id="captureTitle">Got a spooky photo?</h2>
-      <p>Choose your favourite Halloween shot and we'll add it to the wall.</p>
-      <button class="primary-button" id="uploadMain" type="button">Add your photo</button>
-      <p class="no-fuss">No account · No name · Just the photo</p>
+      <div class="capture-copy">
+        <p class="tiny-label">📸 YOUR MOMENT</p>
+        <h2 id="captureTitle">Be part of the wall.</h2>
+        <p>Got a spooky one? A great one? A slightly questionable one? Add your favourite Halloween photo and see it join the live wall.</p>
+        <button class="primary-button" id="uploadMain" type="button">Add your photo</button>
+        <p class="no-fuss">No account · No name · Just the photo</p>
+      </div>
+      <div class="capture-mark" aria-hidden="true">✦</div>
     </section>
 
     <section class="qr-section" aria-labelledby="qrTitle">
       <p class="tiny-label">ON YOUR PHONE</p>
-      <h2 id="qrTitle">Scan to upload</h2>
+      <h2 id="qrTitle">Scan &amp; share</h2>
+      <p class="section-intro">Point your camera here to add your photo in seconds.</p>
       <div class="qr-wrap">
         <div id="qrcode" aria-label="QR code to upload a photo"></div>
       </div>
-      <p class="qr-caption">Point your camera here 👻</p>
+      <p class="qr-caption">Scan to upload 👻</p>
     </section>
 
     <section class="wall-section" aria-labelledby="wallTitle">
       <div class="section-heading">
-        <div>
-          <p class="tiny-label">THE LIVE WALL</p>
-          <h2 id="wallTitle">That's a lovely photo <span id="photoCount"></span> 🖤</h2>
-        </div>
+        <p class="tiny-label">THE LIVE WALL</p>
+        <h2 id="wallTitle">Look what you've made.</h2>
+        <p>Every photo becomes part of the night.</p>
       </div>
       <div id="status" class="status" role="status" aria-live="polite">Loading the wall…</div>
       <div id="wall" class="wall" aria-live="polite"></div>
     </section>
 
     <footer class="footer">
-      <div class="brand">NARWHALL</div>
-      <span>Capture your moment · Share the night</span>
+      <div class="footer-brand">
+        <div class="brand">NARWHALL</div>
+        <span>Be part of our wall.</span>
+      </div>
+      <span>Halloween 2026 · Capture your moment · Share the night</span>
     </footer>
   </main>
 
@@ -55,7 +65,7 @@
     <div class="modal-backdrop" data-close></div>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
       <button class="close-button" id="closeUpload" type="button" aria-label="Close">×</button>
-      <p class="tiny-label">🎃 ADD TO THE WALL</p>
+      <p class="tiny-label">🎃 BE PART OF THE WALL</p>
       <h2 id="uploadTitle">Your Halloween moment</h2>
       <p class="modal-intro">Choose one photo. No account, no name, no fuss.</p>
 
