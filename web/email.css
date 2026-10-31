@@ -1,0 +1,18 @@
+.email-modal{overflow:auto;padding:24px 16px}
+.email-card{position:relative;width:min(100%,400px);max-height:calc(100dvh - 48px);overflow:auto;border:1px solid #dfd0bf;border-radius:22px;background:#fff7ed;color:#21140f;padding:30px 28px 25px;text-align:center;box-shadow:0 25px 80px #0009}
+.email-close{position:absolute;top:12px;right:12px;border:0;background:transparent;color:#756f6a;font:30px/1 Arial,sans-serif;width:40px;height:40px;cursor:pointer}
+.email-check{display:grid;place-items:center;width:62px;height:62px;margin:12px auto 22px;border-radius:50%;background:#f58227;color:#fff;font:34px/1 Arial,sans-serif}
+.email-card h2{margin:0 0 14px;font-size:clamp(1.8rem,7vw,2.2rem);line-height:1.12;letter-spacing:-.04em}
+.email-card h2:focus{outline:none}
+.email-card .email-intro{margin:0 0 25px;color:#6d6664;font:1rem/1.45 Arial,sans-serif}
+.email-card label{display:block;margin-bottom:10px;text-align:left;font:600 .9rem/1.4 Arial,sans-serif}
+.email-card input[type=email]{display:block;width:100%;min-height:52px;margin:0 0 17px;padding:13px 14px;border:1px solid #bfb7b0;border-radius:10px;background:#fffaf4;color:#21140f;font:1rem Arial,sans-serif}
+.email-card .primary-button,.email-skip{display:block;width:100%;min-height:50px;border-radius:10px}
+.email-card .primary-button{box-shadow:none;font-size:1rem}
+.email-skip{margin-top:12px;border:1px solid #e2d8cf;background:#ede5de;color:#21140f;font:700 1rem Arial,sans-serif;cursor:pointer}
+.email-note{margin:20px 0 0;color:#746e6a;font:.77rem/1.5 Arial,sans-serif}
+.email-message{margin:18px 0;color:#773d18;font:.94rem/1.5 Arial,sans-serif}
+.email-message[hidden],.email-card form[hidden]{display:none}
+.email-card .honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.email-card input:focus-visible,.email-card button:focus-visible{outline:3px solid #b94100;outline-offset:3px}
+@media(max-height:660px){.email-card{padding:18px 22px}.email-check{width:44px;height:44px;margin:6px auto 14px;font-size:26px}.email-card .email-intro{margin-bottom:17px}.email-note{margin-top:14px}}

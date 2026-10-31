@@ -160,6 +160,7 @@ async function uploadPhoto(file, caption) {
     body: JSON.stringify({ public_id: publicId, storage_path: path, bytes: file.size, mime_type: file.type.toLowerCase(), caption, approved: true }),
   });
   if (!insertResponse.ok) throw new Error((await insertResponse.text()) || "The photo could not be added to the wall.");
+  return publicId;
 }
 input.addEventListener("change", () => {
   clearMessages();
@@ -192,12 +193,16 @@ form.addEventListener("submit", async (event) => {
   progressBar.style.width = "25%";
   submitUpload.textContent = "Pinning…";
   try {
-    await uploadPhoto(file, captionInput.value.trim());
+    const pinnedPhotoId = await uploadPhoto(file, captionInput.value.trim());
     progressBar.style.width = "100%";
     showMessage(uploadSuccess, "Pinned! Your Polaroid is on the wall.");
     await loadPhotos();
     submitUpload.textContent = "Pinned ✓";
-    setTimeout(hideModal, 1100);
+    setTimeout(() => {
+      if (modal.hidden) return;
+      hideModal();
+      window.NarwhallEmail?.show(pinnedPhotoId);
+    }, 900);
   } catch (err) {
     showMessage(uploadError, err.message || "Upload failed. Please try again.");
     submitUpload.disabled = false;
@@ -212,3 +217,4 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") { 
 loadPhotos();
 setInterval(loadPhotos, 4000);
 if (new URLSearchParams(location.search).get("upload") === "1") startCamera();
+

@@ -50,3 +50,14 @@ The public site is currently served by the Supabase Edge Function above. Its sou
 The frontend contains only the Supabase project URL and publishable key. No secret/service key is included in browser code.
 
 The `worker/` directory is retained for the planned Cloudflare R2/D1 version and is not needed for the current Supabase version.
+
+
+## Optional wall-link email
+
+The Vercel project uses root directory `web` and now has `/api/wall-email` for transactional wall links through its connected Resend resource. The provider supplies `RESEND_API_KEY` and `RESEND_EMAIL_DOMAIN`; keys are never exposed in frontend code.
+
+Set `WALL_EMAIL_ENABLED=true` only after `mail.narwhall.app` is verified for sending. Without it, the email prompt stays hidden and posting works normally. The prompt appears only after a successful upload, is skippable, and does not focus the email input automatically. It does not subscribe visitors to marketing. Recipient addresses are handled in private Resend delivery logs, not stored in public photo metadata.
+
+The endpoint validates origin, a recent approved photo, email and honeypot; it sends only the fixed wall-link template. Provider idempotency deduplicates requests to the same normalized address per UTC day. Free-plan provider limits are 100 emails/day and 3,000/month.
+
+Run `node --test tests/wall-email.test.cjs` for server validation and provider failure checks.

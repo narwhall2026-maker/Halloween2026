@@ -7,6 +7,7 @@
   <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
   <title>NARWHALL — Halloween 2026</title>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/email.css">
   <style>
     .own-wall-link{display:inline-flex;flex-direction:column;align-items:center;gap:5px;margin:0 auto 24px;padding:12px 20px;border:1px solid rgba(255,138,36,.65);border-radius:8px;background:rgba(16,8,6,.7);color:var(--cream);font-family:Arial,Helvetica,sans-serif;text-decoration:none;transition:background .2s,border-color .2s}
     .own-wall-link strong{font-size:.9rem;letter-spacing:.02em}
@@ -88,7 +89,26 @@
     </section>
   </div>
 
+  <div class="modal email-modal" id="emailModal" hidden>
+    <section class="email-card" role="dialog" aria-modal="true" aria-labelledby="wallEmailTitle" aria-describedby="wallEmailIntro">
+      <button class="email-close" id="closeWallEmail" type="button" aria-label="Close email invitation">×</button>
+      <div class="email-check" aria-hidden="true">✓</div>
+      <h2 id="wallEmailTitle" tabindex="-1">Your photo’s on<br>the wall! 🎃</h2>
+      <p class="email-intro" id="wallEmailIntro">Want the link for later?</p>
+      <form id="wallEmailForm">
+        <label for="wallEmailAddress">Email address (optional)</label>
+        <input type="email" id="wallEmailAddress" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" maxlength="254" required>
+        <input class="honeypot" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="primary-button" type="submit" id="sendWallEmail">Send me the link</button>
+      </form>
+      <p class="email-message" id="wallEmailMessage" role="status" aria-live="polite" hidden></p>
+      <button class="email-skip" id="skipWallEmail" type="button">No thanks</button>
+      <p class="email-note">We’ll only email you the wall link.<br>Your email won’t appear on the wall.</p>
+    </section>
+  </div>
+
   <div class="lightbox" id="lightbox" hidden><button id="closeLightbox" type="button" aria-label="Close photo">×</button><img id="lightboxImage" alt="Enlarged wall photo"></div>
+  <script src="/email.js"></script>
   <script src="/app.js"></script>
   <script>
     document.querySelector("#shareWall").addEventListener("click", async () => {
@@ -119,3 +139,4 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+
