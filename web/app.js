@@ -76,6 +76,7 @@ function renderPhotos(photos) {
     card.title = "Open photo";
     card.addEventListener("click", () => openLightbox(publicPhotoUrl(photo.storage_path)));
     const img = document.createElement("img");
+    img.draggable = false;
     img.loading = "lazy";
     img.decoding = "async";
     img.src = publicPhotoUrl(photo.storage_path);
@@ -214,6 +215,12 @@ document.querySelector("#closeUpload").addEventListener("click", hideModal);
 document.querySelector("#closeLightbox").addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => { if (event.target === lightbox) closeLightbox(); });
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") { hideModal(); closeLightbox(); } });
+// Discourage normal image saving while keeping tap/click enlargement available.
+lightboxImage.draggable = false;
+for (const surface of [wall, lightbox]) {
+  surface.addEventListener("contextmenu", (event) => event.preventDefault());
+  surface.addEventListener("dragstart", (event) => event.preventDefault());
+}
 loadPhotos();
 setInterval(loadPhotos, 4000);
 if (new URLSearchParams(location.search).get("upload") === "1") startCamera();
