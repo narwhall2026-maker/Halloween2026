@@ -15,7 +15,17 @@
     .own-wall-link:hover{background:rgba(255,100,16,.18);border-color:var(--orange2)}
     .own-wall-link:focus-visible{outline:3px solid var(--orange2);outline-offset:4px}
     .join-section{flex-wrap:wrap;gap:14px}
-    .wall-share{min-width:220px}
+    .photo-callout{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .photo-site-link{color:var(--cream);font: .8rem Arial,Helvetica,sans-serif;text-underline-offset:4px;padding:5px 10px}
+    .photo-site-link:hover{color:var(--orange2)}
+    .photo-site-link:focus-visible{outline:3px solid var(--orange2);outline-offset:3px}
+    #uploadMain{position:relative;isolation:isolate;border:2px solid #ffbd69;background:linear-gradient(135deg,#ffb13b,#ff6410,#ff9c24);background-size:200% 200%;animation:photo-colour-cycle 4s ease-in-out infinite;box-shadow:0 0 24px rgba(255,119,20,.6)}
+    #uploadMain::after{content:"";position:absolute;inset:-6px;border:2px solid rgba(255,167,63,.65);border-radius:10px;pointer-events:none;animation:photo-glow-cycle 3s ease-out infinite}
+    #uploadMain:focus-visible{outline:3px solid var(--cream);outline-offset:9px}
+    @keyframes photo-colour-cycle{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    @keyframes photo-glow-cycle{0%{transform:scale(1);opacity:.7}75%,100%{transform:scale(1.12,1.35);opacity:0}}
+    @media(prefers-reduced-motion:reduce){#uploadMain,#uploadMain::after{animation:none}#uploadMain::after{display:none}}
+    .wall-share{min-width:220px;align-self:flex-start}
     .share-status{flex-basis:100%;margin:0;text-align:center;font: .85rem Arial,Helvetica,sans-serif;color:var(--cream)}
     .share-status a{color:var(--orange2)}
     .share-status[hidden]{display:none}
@@ -34,7 +44,10 @@
     </header>
 
     <section class="join-section" aria-label="Take a Halloween photo">
-      <button class="primary-button take-photo-main" id="uploadMain" type="button">📷 &nbsp;Take a Photo</button>
+      <div class="photo-callout">
+        <button class="primary-button take-photo-main" id="uploadMain" type="button">📷 &nbsp;Take a Photo</button>
+        <a class="photo-site-link" href="https://narwhall.com" target="_blank" rel="noopener noreferrer">narwhall.com ↗</a>
+      </div>
       <button class="secondary-button wall-share" id="shareWall" type="button">Share this wall ↗</button>
       <p class="share-status" id="shareStatus" role="status" aria-live="polite" hidden></p>
     </section>
