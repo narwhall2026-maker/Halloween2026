@@ -80,7 +80,7 @@ function renderPhotos(photos) {
     img.loading = "lazy";
     img.decoding = "async";
     img.src = publicPhotoUrl(photo.storage_path);
-    img.alt = photo.caption ? `Halloween photo: ${photo.caption}` : "Halloween event photo";
+    img.alt = photo.caption ? `Christmas photo: ${photo.caption}` : "Christmas event photo";
     card.appendChild(img);
     if (photo.caption) {
       const caption = document.createElement("span");

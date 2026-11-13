@@ -3,49 +3,46 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#080504">
-  <meta name="description" content="Halloween 2026 live photo wall by Narwhall">
-  <title>NARWHALL — Halloween 2026</title>
+  <meta name="theme-color" content="#082b23">
+  <meta name="description" content="Christmas 2026 live photo wall by Narwhall">
+  <title>NARWHALL — Christmas 2026</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/email.css">
   <style>
-    .own-wall-link{display:inline-flex;flex-direction:column;align-items:center;gap:5px;margin:0 auto 24px;padding:12px 20px;border:1px solid rgba(255,138,36,.65);border-radius:8px;background:rgba(16,8,6,.7);color:var(--cream);font-family:Arial,Helvetica,sans-serif;text-decoration:none;transition:background .2s,border-color .2s}
+    .own-wall-link{display:inline-flex;flex-direction:column;align-items:center;gap:5px;margin:0 auto 24px;padding:12px 20px;border:1px solid rgba(218,185,113,.5);border-radius:8px;background:rgba(8,43,35,.7);color:var(--cream);font-family:Arial,Helvetica,sans-serif;text-decoration:none;transition:background .2s,border-color .2s}
     .own-wall-link strong{font-size:.9rem;letter-spacing:.02em}
     .own-wall-link small{font-size:.72rem;color:#ded0c4}
-    .own-wall-link:hover{background:rgba(255,100,16,.18);border-color:var(--orange2)}
-    .own-wall-link:focus-visible{outline:3px solid var(--orange2);outline-offset:4px}
+    .own-wall-link:hover{background:rgba(218,185,113,.15);border-color:var(--gold-light)}
+    .own-wall-link:focus-visible{outline:3px solid var(--gold-light);outline-offset:4px}
     #wall img,#lightbox img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
     .join-section{flex-wrap:wrap;gap:14px}
     .photo-callout{display:flex;flex-direction:column;align-items:center;gap:12px}
-    .photo-site-link{display:inline-flex;align-items:center;gap:9px;margin:0 auto 26px;padding:9px 15px;border:1px solid rgba(255,166,76,.4);border-radius:999px;background:linear-gradient(135deg,rgba(255,138,36,.14),rgba(255,245,231,.04));box-shadow:0 4px 20px rgba(255,100,16,.08);color:var(--cream);font: .78rem Arial,Helvetica,sans-serif;text-decoration:none}.photo-site-link span{color:#e5b98c;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}.photo-site-link strong{font-weight:600}.photo-site-link b{color:var(--orange2);font-weight:400}
-    .photo-site-link:hover{color:var(--orange2)}
-    .photo-site-link:focus-visible{outline:3px solid var(--orange2);outline-offset:3px}
-    #uploadMain{position:relative;isolation:isolate;border:2px solid #ffbd69;background:linear-gradient(135deg,#ffb13b,#ff6410,#ff9c24);background-size:200% 200%;animation:photo-colour-cycle 4s ease-in-out infinite;box-shadow:0 0 24px rgba(255,119,20,.6)}
-    #uploadMain::after{content:"";position:absolute;inset:-6px;border:2px solid rgba(255,167,63,.65);border-radius:10px;pointer-events:none;animation:photo-glow-cycle 3s ease-out infinite}
+    .photo-site-link{display:inline-flex;align-items:center;gap:9px;margin:0 auto 26px;padding:9px 15px;border:1px solid rgba(218,185,113,.4);border-radius:999px;background:linear-gradient(135deg,rgba(218,185,113,.14),rgba(255,245,231,.04));box-shadow:0 4px 20px rgba(218,185,113,.08);color:var(--cream);font: .78rem Arial,Helvetica,sans-serif;text-decoration:none}.photo-site-link span{color:#dfc68f;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}.photo-site-link strong{font-weight:600}.photo-site-link b{color:var(--gold-light);font-weight:400}
+    .photo-site-link:hover{color:var(--gold-light)}
+    .photo-site-link:focus-visible{outline:3px solid var(--gold-light);outline-offset:3px}
     #uploadMain:focus-visible{outline:3px solid var(--cream);outline-offset:9px}
-    @keyframes photo-colour-cycle{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    @keyframes photo-glow-cycle{0%{transform:scale(1);opacity:.7}75%,100%{transform:scale(1.12,1.35);opacity:0}}
-    @media(prefers-reduced-motion:reduce){#uploadMain,#uploadMain::after{animation:none}#uploadMain::after{display:none}}
     .wall-share{min-width:220px;align-self:flex-start}
     .share-status{flex-basis:100%;margin:0;text-align:center;font: .85rem Arial,Helvetica,sans-serif;color:var(--cream)}
-    .share-status a{color:var(--orange2)}
+    .share-status a{color:var(--gold-light)}
     .share-status[hidden]{display:none}
-    #shareWall:focus-visible{outline:3px solid var(--orange2);outline-offset:4px}
+    #shareWall:focus-visible{outline:3px solid var(--gold-light);outline-offset:4px}
   </style>
 </head>
 <body>
-  <div class="haunted-scene" aria-hidden="true"><span class="moon"></span><span class="castle">♜</span><span class="bat bat-one">🦇</span><span class="bat bat-two">🦇</span></div>
+  <div class="christmas-scene" aria-hidden="true"><div class="snow"></div><span class="tree tree-left">🎄</span><span class="tree tree-right">🎄</span></div>
+  <div class="festive-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <main class="page-shell">
     <header class="hero">
       <a class="own-wall-link" href="https://narwhall.app" target="_blank" rel="noopener noreferrer"><strong>Have your own wall ↗</strong><small>No download · Quick log in</small></a>
       <img class="narwhall-logo" src="/narwhall-logo.svg" alt="NARWHALL">
       <a class="photo-site-link" href="https://narwhall.com" target="_blank" rel="noopener noreferrer"><span>Discover</span><strong>narwhall.com</strong><b aria-hidden="true">↗</b></a>
-      <p class="kicker"><span>🎃</span> HALLOWEEN 2026 <span>🎃</span></p>
-      <p class="tagline">Be part of our wall.</p>
-      <div class="orange-swoosh" aria-hidden="true"></div>
+      <p class="kicker"><span>🎄</span> CHRISTMAS 2026 <span>🎄</span></p>
+      <p class="tagline">A little Christmas magic.</p>
+      <p class="hero-note">Good company. Festive moments. One very merry photo wall.</p>
+      <div class="gold-swoosh" aria-hidden="true"></div>
     </header>
 
-    <section class="join-section" aria-label="Take a Halloween photo">
+    <section class="join-section" aria-label="Take a Christmas photo">
       <div class="photo-callout">
         <button class="primary-button take-photo-main" id="uploadMain" type="button">📷 &nbsp;Take a Photo</button>
       </div>
@@ -57,15 +54,15 @@
 
     <section class="wall-section" aria-labelledby="wallTitle">
       <div class="section-heading">
-        <p class="tiny-label">LIVE WALL</p>
-        <h2 id="wallTitle">Your photos. Live.</h2>
+        <p class="tiny-label">THE CHRISTMAS PHOTO WALL</p>
+        <h2 id="wallTitle">Making spirits bright.</h2>
         <p class="wall-subtitle">SNAP <span>•</span> PIN <span>•</span> SEE IT HERE</p>
       </div>
       <div id="status" class="status" role="status" aria-live="polite">Loading the wall…</div>
       <div id="wall" class="wall" aria-live="polite"></div>
     </section>
 
-    <footer class="footer"><img src="/narwhall-logo.svg" alt="Narwhall"><span>Be part of our wall. · Halloween 2026</span></footer>
+    <footer class="footer"><img src="/narwhall-logo.svg" alt="Narwhall"><span>Made for merry memories. · Christmas 2026</span></footer>
   </main>
 
   <div class="modal" id="uploadModal" hidden>
@@ -83,7 +80,7 @@
 
         <div id="photoReview" class="photo-review" hidden>
           <div class="photo-polaroid-paper">
-            <div class="photo-polaroid-image"><img id="previewImage" alt="Your Halloween photo"></div>
+            <div class="photo-polaroid-image"><img id="previewImage" alt="Your Christmas photo"></div>
             <label class="photo-polaroid-caption" for="caption">
               <span class="caption-placeholder">Write something…</span>
               <input id="caption" name="caption" type="text" maxlength="15" autocomplete="off" placeholder="Write something…">
@@ -107,7 +104,7 @@
     <section class="email-card" role="dialog" aria-modal="true" aria-labelledby="wallEmailTitle" aria-describedby="wallEmailIntro">
       <button class="email-close" id="closeWallEmail" type="button" aria-label="Close email invitation">×</button>
       <div class="email-check" aria-hidden="true">✓</div>
-      <h2 id="wallEmailTitle" tabindex="-1">Your photo’s on<br>the wall! 🎃</h2>
+      <h2 id="wallEmailTitle" tabindex="-1">Your photo’s on<br>the wall! 🎄</h2>
       <p class="email-intro" id="wallEmailIntro">Want the link for later?</p>
       <form id="wallEmailForm">
         <label for="wallEmailAddress">Email address (optional)</label>
@@ -126,12 +123,12 @@
   <script src="/app.js"></script>
   <script>
     document.querySelector("#shareWall").addEventListener("click", async () => {
-      const url = "https://my-halloween2026.vercel.app/";
+      const url = new URL(location.pathname, location.origin).href;
       const message = document.querySelector("#shareStatus");
       message.hidden = true;
       try {
         if (navigator.share) {
-          await navigator.share({ title: "Narwhall Halloween wall", text: "Join our Halloween wall! Share your costumes and your best moments.", url });
+          await navigator.share({ title: "Narwhall Christmas wall", text: "Join our Christmas wall! Share your festive photos and your favourite Christmas moments.", url });
           return;
         }
         await navigator.clipboard.writeText(url);

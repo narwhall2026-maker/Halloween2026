@@ -43,9 +43,9 @@ module.exports = async function handler(req, res) {
       method: 'POST',
       headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': 'wall-link-' + idempotency },
       body: JSON.stringify({
-        from: 'Narwhall <hello@mail.narwhall.app>', to: [email], subject: 'Your Narwhall Halloween wall link',
-        text: `Your photo is on the wall!\n\nRevisit the Halloween wall here:\n${WALL_URL}\n\nYou asked us to email this link after posting a photo. This does not subscribe you to marketing emails.\n\nNarwhall`,
-        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px;color:#21140f;background:#fff7ed"><p style="font-weight:bold;letter-spacing:3px;color:#d85009">NARWHALL</p><h1>Your photo is on the wall!</h1><p>Here is your link to all the Halloween moments.</p><p style="margin:28px 0"><a href="${WALL_URL}" style="display:inline-block;background:#f76b16;color:#21140f;text-decoration:none;padding:15px 22px;border-radius:6px;font-weight:bold">Back to the Halloween wall</a></p><p><a href="${WALL_URL}">${WALL_URL}</a></p><p style="font-size:12px;line-height:1.6;color:#6e5548">You asked us to email this link after posting a photo. This does not subscribe you to marketing emails.</p></div>`,
+        from: 'Narwhall <hello@mail.narwhall.app>', to: [email], subject: 'Your Narwhall Christmas wall link',
+        text: `Your photo is on the wall!\n\nRevisit the Christmas wall here:\n${WALL_URL}\n\nYou asked us to email this link after posting a photo. This does not subscribe you to marketing emails.\n\nNarwhall`,
+        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:32px;color:#21140f;background:#fff7ed"><p style="font-weight:bold;letter-spacing:3px;color:#17634b">NARWHALL</p><h1>Your photo is on the wall!</h1><p>Here is your link to all the Christmas moments.</p><p style="margin:28px 0"><a href="${WALL_URL}" style="display:inline-block;background:#a92339;color:#fffaf0;text-decoration:none;padding:15px 22px;border-radius:6px;font-weight:bold">Back to the Christmas wall</a></p><p><a href="${WALL_URL}">${WALL_URL}</a></p><p style="font-size:12px;line-height:1.6;color:#6e5548">You asked us to email this link after posting a photo. This does not subscribe you to marketing emails.</p></div>`,
       }),
       signal: AbortSignal.timeout(10000),
     });

@@ -1,6 +1,6 @@
-# Halloween 2026 Photo Wall
+# Christmas 2026 Photo Wall
 
-A public, no-sign-in Halloween photo wall for an event. Visitors scan a QR code, choose a photo on their phone, and the image appears on the live wall.
+A public, no-sign-in Christmas photo wall for an event. Visitors scan a QR code, choose a photo on their phone, and the image appears on the live wall.
 
 ## Current architecture
 
